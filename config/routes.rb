@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -6,7 +7,14 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root to: "home#index"
-
+  
+  get "categories" => "categories#index", as: :categories
+  get "categories/new" => "categories#new", as: :new_category
+  post "categories/new" => "categories#create"
+  delete "categories/:id" => "categories#destroy", as: :delete_category
+  get "category/edit/:id" => "categories#edit", as: :edit_category
+  post "category/edit/:id" => "categories#update"
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
