@@ -15,6 +15,12 @@ Rails.application.routes.draw do
   get "category/edit/:id" => "categories#edit", as: :edit_category
   post "category/edit/:id" => "categories#update"
   
+  get "expenses" => "expenses#index", as: :expenses
+  get "expenses/new" => "expenses#new", as: :new_expense
+  post "expenses/new" => "expenses#create"
+  delete "expenses/:id" => "expenses#destroy", as: :delete_expense
+  get "expense/edit/:id" => "expenses#edit", as: :edit_expense
+  post "expense/edit/:id" => "expenses#update"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

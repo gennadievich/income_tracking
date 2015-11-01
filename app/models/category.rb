@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
-  has_many :incomes
-  has_many :expenses
+  has_many :incomes, dependent: :destroy
+  has_many :expenses, dependent: :destroy
   
   validates_presence_of :name
 

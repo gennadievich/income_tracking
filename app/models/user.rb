@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  has_many :expenses
-  has_many :incomes
-  has_many :categories
+  has_many :expenses, dependent: :destroy
+  has_many :incomes, dependent: :destroy
+  has_many :categories, dependent: :destroy
 end
