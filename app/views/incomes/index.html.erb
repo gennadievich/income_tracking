@@ -1,0 +1,29 @@
+<br>
+<%= link_to "Add new Income", new_income_path, class: "btn btn-default btn-lg" %>
+<br>
+
+<table class="table table-striped">
+  <% unless @incomes.empty? %>
+    <h2>Your last incomes:</h2>
+    <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+    </thead>
+  <% end %>
+
+  <% @incomes.each do |income| %>
+    <tr>
+      <td><%= income.category.name %></td>
+      <td><%= number_to_currency(income.sum, unit: "", precision: 0) %></td>
+      <td><%= income.date %></td>
+      <td class="right">
+        <%= link_to "Edit", edit_income_path(income.id), class: "btn btn-warning btn-lg" %>
+        <%= link_to "Delete", income_path(income.id), method: :delete, data: {confirm: "Delete expense?"}, class: "btn btn-danger btn-lg"%>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -18,11 +18,11 @@
   <% @expenses.each do |expense| %>
     <tr>
       <td><%= expense.category.name %></td>
-      <td><%= expense.sum %></td>
+      <td><%= number_to_currency(expense.sum, unit: "", precision: 0) %></td>
       <td><%= expense.date %></td>
       <td class="right">
         <%= link_to "Edit", edit_expense_path(expense.id), class: "btn btn-warning btn-lg" %>
-        <%= link_to "Delete", delete_expense_path(expense.id), method: :delete, data: {confirm: "Delete expense?"}, class: "btn btn-danger btn-lg"%>
+        <%= link_to "Delete", expense_path(expense.id), method: :delete, data: {confirm: "Delete expense?"}, class: "btn btn-danger btn-lg"%>
       </td>
     </tr>
   <% end %>

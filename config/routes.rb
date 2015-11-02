@@ -7,20 +7,14 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root to: "home#index"
+
+  post 'reports/' => 'reports#report'
   
-  get "categories" => "categories#index", as: :categories
-  get "categories/new" => "categories#new", as: :new_category
-  post "categories/new" => "categories#create"
-  delete "categories/:id" => "categories#destroy", as: :delete_category
-  get "category/edit/:id" => "categories#edit", as: :edit_category
-  post "category/edit/:id" => "categories#update"
+  resources :categories
+  resources :expenses
+  resources :incomes
+  resources :reports
   
-  get "expenses" => "expenses#index", as: :expenses
-  get "expenses/new" => "expenses#new", as: :new_expense
-  post "expenses/new" => "expenses#create"
-  delete "expenses/:id" => "expenses#destroy", as: :delete_expense
-  get "expense/edit/:id" => "expenses#edit", as: :edit_expense
-  post "expense/edit/:id" => "expenses#update"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
