@@ -5,19 +5,17 @@ class ExpensesController < ApplicationController
   
   def new
     @expense = Expense.new
-    @categories = Category.all.map(&:name)
+    @categories = Category.categories_names
   end
   
   def create
-    unless params[:expense][:category].empty?
-      @category = current_user.categories.where(name: params[:expense][:category].upcase ).first_or_create
-      current_user.categories << @category
-    
-      @expense = Expense.new(expense_params)
+    if params[:expense][:category].present?
+      @category = current_user.build_category_if_not_exists(params[:expense][:category])
+          
+      @expense = current_user.expenses.build(expense_params)
       @expense.category = @category
     
       if @expense.save
-        current_user.expenses << @expense
         redirect_to expenses_path
       else
         render :new
@@ -30,6 +28,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
+    
     redirect_to expenses_path
   end
   
@@ -39,7 +38,7 @@ class ExpensesController < ApplicationController
   
   def update
     @expense = Expense.find(params[:id])
-    @category = current_user.categories.where(name: params[:expense][:category][:name].upcase).first_or_create
+    @category = current_user.build_category_if_not_exists(params[:expense][:category][:name])
     @expense.category = @category
     
     if @expense.update(expense_params)

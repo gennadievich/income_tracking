@@ -1,4 +1,4 @@
-<%= form_tag ('/reports'), {class: "form-inline"} do %>
+<%= form_tag(report_path, method: :get, class: "form-inline") do %>
   <div class="form-group">
   <%= date_field_tag :start_date, nil, class: "form-control" %>
   <%= date_field_tag :end_date, nil, class: "form-control" %>

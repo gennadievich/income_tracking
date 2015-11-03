@@ -1,16 +1,12 @@
 class CategoriesController < ApplicationController
-  
-  before_action :check_if_category_exists, only: [:create, :update]
-  
   def index
     @categories = current_user.categories.all
   end
 
   def create
-    @category = Category.new(category_params)
+    @category = current_user.build_category_if_not_exists(category_params[:name])
       
       if @category.save
-        current_user.categories << @category
         redirect_to categories_path
       else
         render :new
@@ -23,9 +19,6 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = Category.find(params[:id])
-  end
-
-  def show
   end
 
   def update
@@ -41,6 +34,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
+    
     redirect_to categories_path
   end
   
@@ -48,11 +42,5 @@ class CategoriesController < ApplicationController
   
   def category_params
     params.require(:category).permit(:name)
-  end
-  
-  def check_if_category_exists
-    if current_user.categories.find_by(name: params[:category][:name].upcase)
-      redirect_to :back
-    end
   end
 end

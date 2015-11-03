@@ -5,19 +5,17 @@ class IncomesController < ApplicationController
 
   def new
     @income = Income.new
-    @categories = Category.all.map(&:name)
+    @categories = Category.categories_names
   end
 
   def create
-    unless params[:income][:category].empty?
-      @category = current_user.categories.where(name: params[:income][:category].upcase ).first_or_create
-      current_user.categories << @category
-
-      @income = Income.new(income_params)
+    if params[:income][:category].present?
+      @category = current_user.build_category_if_not_exists(params[:income][:category])
+      
+      @income = current_user.incomes.build(income_params)
       @income.category = @category
 
       if @income.save
-        current_user.incomes << @income
         redirect_to incomes_path
       else
         render :new
@@ -30,6 +28,7 @@ class IncomesController < ApplicationController
   def destroy
     @income = Income.find(params[:id])
     @income.destroy
+    
     redirect_to incomes_path
   end
 
@@ -39,7 +38,7 @@ class IncomesController < ApplicationController
 
   def update
     @income = Income.find(params[:id])
-    @category = current_user.categories.where(name: params[:income][:category][:name].upcase).first_or_create
+    @category = current_user.build_category_if_not_exists(params[:income][:category][:name])
     @income.category = @category
 
     if @income.update(income_params)
