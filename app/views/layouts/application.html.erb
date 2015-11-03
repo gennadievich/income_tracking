@@ -18,14 +18,19 @@
       </div>
     </div>
   </div>
-  
-  
+    
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       <%= render partial: "/home/navigation" %>
       <%= yield %>
     </div>
   </div>
+
+  <% if flash.present?%>
+    <div class="row col-md-offset-3 col-md-6 center alert">
+      <%= flash[:alert] %>
+    </div>
+<% end %>
 
 </body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
