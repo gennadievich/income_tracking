@@ -1,6 +1,6 @@
 <%= form_for @expense = Expense.new do |f| %>
   <%= f.number_field :sum, placeholder: "Amount", class: "form-control width-80" %>
   <%= f.date_field :date, placeholder: "Date", class: "form-control width-80" %>
-  <%= f.text_field :category, placeholder: "Category", class: "form-control width-80" %>
+  <%= f.select(:category, options_from_collection_for_select(current_user.categories, "name", "name"),{}, {class: "form-control width-80"}) %>
   <%= f.submit nil, class: "btn btn-default width-80" %>
 <% end %>

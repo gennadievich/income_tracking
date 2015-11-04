@@ -22,8 +22,8 @@ class ExpensesController < ApplicationController
         render :new
       end
     else
-      flash[:alert] = "Fill in all fields please"
-      render :new
+      flash[:alert] = "Create a new category first"
+      redirect_to new_category_path
     end
   end
   
@@ -46,6 +46,7 @@ class ExpensesController < ApplicationController
     if @expense.update(expense_params)
       redirect_to expenses_path
     else
+      flash[:alert] = "Fill in all fields please"
       render :edit
     end
   end
