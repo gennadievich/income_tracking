@@ -18,9 +18,11 @@ class IncomesController < ApplicationController
       if @income.save
         redirect_to incomes_path
       else
+        flash[:alert] = "Fill in all fields please"
         render :new
       end
     else
+      flash[:alert] = "Fill in all fields please"
       render :new
     end
   end

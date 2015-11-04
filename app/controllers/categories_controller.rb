@@ -9,6 +9,7 @@ class CategoriesController < ApplicationController
       if @category.save
         redirect_to categories_path
       else
+        flash[:alert] = "Enter category name please"
         render :new
       end
   end
@@ -27,6 +28,7 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to categories_path
     else
+      flash[:alert] = "Category name can't be blank"
       render :edit
     end
   end
